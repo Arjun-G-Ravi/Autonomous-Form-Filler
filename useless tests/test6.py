@@ -31,7 +31,7 @@ for data in datas:
 
     # contain textareas
     textareaboxes = driver.find_elements(By.CLASS_NAME, "quantumWizTextinputPapertextareaInput")
-
+    print(textareaboxes)
     # Iterate through all input boxes
     for value in textboxes:
         # enter value
@@ -49,12 +49,12 @@ for data in datas:
     # click on submit button
     submit = driver.find_element(By.XPATH, '//*[@id="mG61Hd"]/div[2]/div/div[3]/div[1]/div/div/span/span')
     submit.click()
-    print('banana')
+    print('banana1')
 
 
     # wait for the element to be present
     WebDriverWait(driver, 2).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div[4]/a')))
-    print('banana')
+    print('banana2')
     # fill another response
     another_response = driver.find_element(By.XPATH, '/html/body/div[1]/div[2]/div[1]/div/div[4]/a')
     another_response.click()

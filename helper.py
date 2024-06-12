@@ -1,6 +1,18 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+from api_key import api
+import openai
+openai.api_key = api
+
+def get_form_filling_answers(website_information):
+    prompt = 'hello'
+    response = openai.Completion.create(
+    engine="gpt-4", prompt=prompt)
+
+    print(response.choices[0].text.strip())
+
+
 
 
 def extract_name_and_xpath(website):
@@ -29,7 +41,7 @@ def extract_name_and_xpath(website):
 
 
 def _get_xpath(element, driver):
-    tag = element.tag_name
+    # tag = element.tag_name
     id_attr = element.get_attribute('id')
     name_attr = element.get_attribute('name')
     
@@ -65,5 +77,6 @@ def _get_xpath(element, driver):
     
 
 if __name__ == '__main__':
-    ans = extract_name_and_xpath('https://form.jotform.com/241617189501153')
-    print(ans)
+    # ans = extract_name_and_xpath('https://form.jotform.com/241617189501153')
+    # print(ans)
+    ans = get_form_filling_answers('4')

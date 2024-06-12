@@ -9,11 +9,7 @@ def get_form_filling_answers(website_information):
     prompt = 'hello'
     response = openai.Completion.create(
     engine="gpt-4", prompt=prompt)
-
     print(response.choices[0].text.strip())
-
-
-
 
 def extract_name_and_xpath(website):
     driver = webdriver.Chrome()
@@ -35,7 +31,6 @@ def extract_name_and_xpath(website):
             name = ""
         out.append([element_xpath, name, base_name])
         # print(f"{element_xpath} - {name}")
-
     driver.quit()
     return out
 

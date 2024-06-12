@@ -11,7 +11,7 @@ for text_block in text_out:
 
 
 llm_output = llm.generate(f'''You are an AI agent that is used to fill up application forms. Given som basic information, try to create a sample answer to the questions.
-Answer the question in the format starting with @[ and ending with ]@ separated by @@@ symbol, as shown below:
+Answer the question in the format starting with @[ and ending with ]@. Each element is separated by @@@ symbol, as shown below:
 Eg: @[Ans1@@@Ans2@@@Ans3@@@ ... Ans22@@@Ans23]@
 Dont output anything other than the answers. Remember to output in the correct format by answering between @-square brackets.
 Make sure to answer every question in the following :{questions}.''')

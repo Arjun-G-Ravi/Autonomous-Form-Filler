@@ -1,24 +1,36 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import time
+from groq import Groq
 from api_key import api
-import openai
-openai.api_key = api
 
-def get_form_filling_answers(website_information):
-    prompt = 'hello'
-    response = openai.Completion.create(
-    engine="gpt-4", prompt=prompt)
-    print(response.choices[0].text.strip())
+class LLM:
+    def __init__(self, temperature = 0.2, top_p=0.3):
+        self.temperature = temperature
+        self.top_p = top_p
+        self.client = Groq(api_key=api)
+
+    def generate(self, inp):
+        chat_completion = self.client.chat.completions.create(
+            messages=[{"role": "user","content": f"{inp}"}],
+            model="llama3-8b-8192",
+            # Other models: llama3-8b-8192 llama3-70b-8192 gemma-7b-it mixtral-8x7b-32768
+            temperature = self.temperature,
+            top_p=self.top_p)
+
+        return chat_completion.choices[0].message.content
+
 
 def extract_name_and_xpath(website):
     driver = webdriver.Chrome()
-    driver.get("https://form.jotform.com/241617189501153")
+    driver.get(website)
     time.sleep(1)
     writable_elements = driver.find_elements(By.XPATH, "//input[not(@type='hidden') and not(@type='submit') and not(@type='button')] | //textarea")
-    out = []
+    text_out = []
+    file_out = []
     for element in writable_elements:
         element_xpath = _get_xpath(element, driver)
+        if not element_xpath: continue
         base_name = element.get_attribute('name')
         parent = element.find_element(By.XPATH, "..")
         grandparent = parent.find_element(By.XPATH, "..")
@@ -29,10 +41,11 @@ def extract_name_and_xpath(website):
                 break
         else:
             name = ""
-        out.append([element_xpath, name, base_name])
+        if base_name == 'file': file_out.append([element_xpath, name, base_name])
+        else: text_out.append([element_xpath, name, base_name])
         # print(f"{element_xpath} - {name}")
     driver.quit()
-    return out
+    return file_out, text_out
 
 
 def _get_xpath(element, driver):
@@ -43,7 +56,7 @@ def _get_xpath(element, driver):
     if id_attr:
         return f'//*[@id="{id_attr}"]'
     elif name_attr:
-        return f'//*[@name="{name_attr}"]'
+        return None # f'//*[@name="{name_attr}"]'
     else:
         # Fallback to full XPath if no id or name attribute is present
         script = """
@@ -72,6 +85,8 @@ def _get_xpath(element, driver):
     
 
 if __name__ == '__main__':
-    # ans = extract_name_and_xpath('https://form.jotform.com/241617189501153')
-    # print(ans)
-    ans = get_form_filling_answers('4')
+    website = 'https://form.jotform.com/241635027272149'
+    ans = extract_name_and_xpath(website)
+    print(ans)
+    llm = LLM()
+    print(llm.generate('hey'))

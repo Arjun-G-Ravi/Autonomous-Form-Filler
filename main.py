@@ -44,5 +44,12 @@ for t,a in zip(text_out, answers):
     el = driver.find_element(By.XPATH, t[0])
     el.send_keys(a)
     sleep(.1)
+
+
+file_path = '/home/arjun/Desktop/GitHub/Autonomous-Form-Filler/to_upload.txt'
+# Locate the file input element and upload the file
+file_input = driver.find_element(By.XPATH, '//*[@id="input_17"]')
+file_input.send_keys(file_path)
+
 sleep(10)
 driver.quit()

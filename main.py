@@ -21,6 +21,7 @@ print(questions)
 llm_output = llm.generate(f'''You are an AI agent that is used to fill up application forms. Given som basic information, try to create a sample answer to the questions.
 Answer the question in the format starting with [ and ending with ]. Each element is separated by @@@ symbol, as shown below:
 Eg: [Ans1@@@Ans2@@@Ans3@@@ ... Ans22@@@Ans23]
+
 Dont output anything other than the answers. Remember to output in the correct format by answering between square brackets. For the cover letter question, write a very short cover letter.
 Make sure to answer every question in the following :{questions}.''')
 print(llm_output)
@@ -46,7 +47,7 @@ for t,a in zip(text_out, answers):
     sleep(.1)
 
 
-file_path = '/home/arjun/Desktop/GitHub/Autonomous-Form-Filler/to_upload.txt'
+file_path ='/home/arjun/Desktop/GitHub/Autonomous-Form-Filler/resume to upload.pdf'
 # Locate the file input element and upload the file
 file_input = driver.find_element(By.XPATH, '//*[@id="input_17"]')
 file_input.send_keys(file_path)

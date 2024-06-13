@@ -10,7 +10,7 @@ print(driver.title)
 
 # Input: Email
 email = "afif_dev@emailcompany.com"
-elEmail = driver.find_element(By.XPATH, "//div/div/div/input")
+elEmail = driver.find_element(By.XPATH, '//*[@id="first_11"]') #"//div/div/div/input")
 elEmail.send_keys(email)
 
 # Input: Name

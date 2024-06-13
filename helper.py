@@ -21,9 +21,9 @@ class LLM:
         return chat_completion.choices[0].message.content
 
 
-def extract_name_and_xpath(website):
-    driver = webdriver.Chrome()
-    driver.get(website)
+def extract_name_and_xpath(website, driver):
+    # driver = webdriver.Chrome()
+    # driver.get(website)
     time.sleep(1)
     writable_elements = driver.find_elements(By.XPATH, "//input[not(@type='hidden') and not(@type='submit') and not(@type='button')] | //textarea")
     text_out = []
@@ -44,7 +44,7 @@ def extract_name_and_xpath(website):
         if base_name == 'file': file_out.append([element_xpath, name, base_name])
         else: text_out.append([element_xpath, name, base_name])
         # print(f"{element_xpath} - {name}")
-    driver.quit()
+    # driver.quit()
     return file_out, text_out
 
 
@@ -86,7 +86,8 @@ def _get_xpath(element, driver):
 
 if __name__ == '__main__':
     website = 'https://form.jotform.com/241635027272149'
-    ans = extract_name_and_xpath(website)
+    driver = webdriver.Chrome()
+    ans = extract_name_and_xpath(website, driver)
     print(ans)
-    llm = LLM()
-    print(llm.generate('hey'))
+    # llm = LLM()
+    # print(llm.generate('hey'))

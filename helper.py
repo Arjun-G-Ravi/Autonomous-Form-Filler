@@ -13,7 +13,7 @@ class LLM:
     def generate(self, inp):
         chat_completion = self.client.chat.completions.create(
             messages=[{"role": "user","content": f"{inp}"}],
-            model="llama3-70b-8192",
+            model= "llama3-70b-8192",
             # Other models: llama3-8b-8192 llama3-70b-8192 gemma-7b-it mixtral-8x7b-32768
             temperature = self.temperature,
             top_p=self.top_p)

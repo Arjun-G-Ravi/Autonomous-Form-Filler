@@ -28,27 +28,20 @@ print(llm_output)
 
 # print('-' *50)
 matches = re.findall(r'\[(.*?)\]', llm_output)[0]
-
 new = matches.split('@@@')
 answers = []
 for i in new:
     answers.append(i)
 
-# print(answers)
-# print(len(answers), len(questions))
 for q,a in zip(questions, answers):
     print(q,' -> ',a)
 
-# print('\n'*3)
 for t,a in zip(text_out, answers):
-    # print( t[0])
     el = driver.find_element(By.XPATH, t[0])
     el.send_keys(a)
     sleep(.1)
-# print('#'*30)
-# print(file_out[0][0])
+
 file_path ='/home/arjun/Desktop/GitHub/Autonomous-Form-Filler/resume to upload.pdf'
-# Locate the file input element and upload the file
 file_input = driver.find_element(By.XPATH, file_out[0][0])
 file_input.send_keys(file_path)
 

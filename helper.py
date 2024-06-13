@@ -13,7 +13,7 @@ class LLM:
     def generate(self, inp):
         chat_completion = self.client.chat.completions.create(
             messages=[{"role": "user","content": f"{inp}"}],
-            model="llama3-8b-8192",
+            model="llama3-70b-8192",
             # Other models: llama3-8b-8192 llama3-70b-8192 gemma-7b-it mixtral-8x7b-32768
             temperature = self.temperature,
             top_p=self.top_p)
@@ -26,6 +26,7 @@ def extract_name_and_xpath(website, driver):
     # driver.get(website)
     time.sleep(1)
     writable_elements = driver.find_elements(By.XPATH, "//input[not(@type='hidden') and not(@type='submit') and not(@type='button')] | //textarea")
+    print(writable_elements)
     text_out = []
     file_out = []
     for element in writable_elements:
@@ -44,7 +45,10 @@ def extract_name_and_xpath(website, driver):
         if base_name == 'file': file_out.append([element_xpath, name, base_name])
         else: text_out.append([element_xpath, name, base_name])
         # print(f"{element_xpath} - {name}")
-    # driver.quit()
+
+    # print(text_out)
+    # print(file_out)
+    # time.sleep(10)
     return file_out, text_out
 
 
